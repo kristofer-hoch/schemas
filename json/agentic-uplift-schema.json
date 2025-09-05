@@ -1,0 +1,65 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "http://www.uipath.com/clientsuccess/agentic-uplift-schema.json",
+	"type": "object",
+	"title": "Process Definition Document - Agentic Uplift Schema",
+	"description": "A document to organize data showing how an AI Agent can help lower costs, errors, and time-to-complete of a business process",
+	"required": [ ],
+	"properties": {
+		"currency": {
+			"type": "string",
+			"description": "The currency code used throughout the document when describing dollar amounts.",
+			"default": "USD"			
+		},
+		"rateAssumptions": {
+			"type": "object",
+			"required": [ "currency" ],
+			"oneOf": [ "hourlyRate", "salary" ],
+			"additionalProperties": true,
+			"properties": {
+				"hourlyRate": {
+					"description": "The amount of money a single person makes per hour to execute the process",
+					"type": "string"
+				},
+				"salary": {
+					"description": "The amount of money a single person per year to execute the process",
+					"type": "string"
+				}
+			}
+		},
+		"agenticUpliftTotals": {
+			"type": "object",
+			"description": "",
+			"properties": {	
+				"addedHoursSavedPerYear": { 
+					"$id": "AGENT_ADDED_SAVINGS",
+					"type": "integer",
+					"default": "0"
+				},
+				"typicalErrorReductionPercent": { 
+					"$id": "AGENT_ERROR_REDUCTION_PERCENT",
+					"type": "integer",
+					"default": "0"
+				},
+				"typicalCycleTimeReductionPercentt": { 
+					"$id": "AGENT_CYCLETIME_REDUCTION_PERCENT",
+					"type": "integer",
+					"default": "0"
+				},
+				"scopeExpansionHoursPerYear": { 
+					"$id": "AGENT_SCOPE_EXPANSION_HOURS_YEAR",
+					"type": "integer",
+					"default": "0"
+				}
+			}
+		},
+		"topOpportunities": {
+			
+		},
+		"stepLevelMapping": {},
+		"risksDependencies": {},
+		"notes": {
+			"type": "string"
+		}
+	}
+}
