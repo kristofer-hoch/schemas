@@ -4,12 +4,12 @@
   "title": "Process Design Document Schema",
   "description": "Process design document description",
   "type": "object",
-	"required": [  ],
+	"required": [  "processFlowAsIs", "company", "employeeProfile", "processSummary", "processVolumetry" ],
 	"properties": {
 		"company": {
 			"additionalProperties": true,
 			"description": "Basic information about the company which executes the process defined in the process definition document",
-			"required": [ "name", "id"],
+			"required": [ "id", "name" ],
 			"type": "object",
 			"properties": {
 				"name": {
@@ -26,7 +26,7 @@
 			"$id": "PROCESS_SUMMARY_SECTION",
 			"additionalProperties": true,
 			"description": "A systematic, repeatable set of activities or tasks, performed in a specific sequence, to achieve a specific organizational goal or business outcome",
-			"required": [ "name", "asOfDate" ],
+			"required": [ "asOfDate", "id", "name"  ],
 			"type": "object",
 			"properties": {
 				"name": {
@@ -147,7 +147,7 @@
 				}
 			}
 		},
-		"asIsProcess": {
+		"processFlowAsIs": {
 			"$id": "AS_IS_PROCESS_SECTION",
 			"additionalProperties": "true",
 			"description": "The current, existing way a business process operates, serving as a baseline for analysis and improvement by detailing the process's steps, stakeholders, systems, and documentation in its present state before any changes are made. It provides a comprehensive, step-by-step view of how work is done now, highlighting inefficiencies and opportunities for optimization in preparation for designing a future, 'to-be' process",
@@ -162,44 +162,83 @@
 					"uniqueItems": [ "stepNumber" ],
 					"items": {
 						"stepNumber": {
+              "$id": "DETAILED_PROCESS_STEP_NUMBER",
 							"description": "The number that identifies the step's order in relative to other steps.",
 							"type": "integer"
 						},
 						"stepDescription": {
+              "$id": "DETAILED_PROCESS_STEP_DESCRIPTION",
 							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
 							"type": "string"
-						}
+						},
+            "possibleExceptions": {
+              "$id": "POSSIBLE_EXCEPTION",
+              "description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
+              "type": "array",
+              "items": {
+                "exceptionType": {
+                  "description": "The type of error or exception",
+                  "oneOf": [ "buisness", "application", "other" ]
+                },
+                "reaction": {
+                  "description": "Steps taken in addition to any INDICATOR_RECOVERY_ACTION",
+                  "type": "string"
+                },
+                "indicators": {
+                  "description": "A list of ways the exception can be discovered",
+                  "type": "array",
+                  "items": {
+                    "indicator": {
+                      "$id": "PROBLEM_INDICATOR",
+                      "description": "How the exception or error is presented to the the user or how to discover the problem",
+                      "type": "string"
+                    },
+                    "recovery": {
+                      "$id": "INDICATOR_RECOVERY_ACTION",
+                      "description": "How to recover from the exception when this indicator is detected",
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
 					}
 				},
 				"inputDataDescriptions": {
 					"$id": "inputDataDescriptions",
-					"description": "_____",
+					"description": "A description of the data or information used in the step",
 					"type": "array",
 					"items": {
 						"stepNumber": {							
 							"description": "Refers to a step number in DETAILED_PROCESS_STEPS",
 							"type": "string"
 						},
-						"inputType": {
-							"description": "____",
-							"type": "____"
-						},
-						"location": {
-							"description": "____",
-							"type": "____"
-						},
-						"isNativelyDigital": {
-							"description": "Describes whether the input has a natively digital source or not.",
-							"type": "boolean"
-						},
-						"isDigitized": {
-							"description": "Describes whether the input is digitized from a non-digital source or not.",
-							"type": "boolean"
-						},
-						"isStructured": {
-							"description": "Describes whether the input is structured or not",
-							"type": "boolean"
-						}
+            "inputs": {
+              "description": "All the data and information needed to execute the process step",
+              "type": "array",
+              "items": {
+                "inputType": {
+                  "description": "Describe the type of information, i.e. Excel File, Website information, email, paper, etc.",
+                  "type": "string"
+                },
+                "location": {
+                  "description": "Where the input type can be found, i.e. Email Box, Website, ",
+                  "type": "string"
+                },
+                "isNativelyDigital": {
+                  "description": "Describes whether the input has a natively digital source or not.",
+                  "type": "boolean"
+                },
+                "isDigitized": {
+                  "description": "Describes whether the input is digitized from a non-digital source or not.",
+                  "type": "boolean"
+                },
+                "isStructured": {
+                  "description": "Describes whether the input is structured or not",
+                  "type": "boolean"
+                }
+              }
+            }
 					}
 				},
 				"applicationsUsed": {
@@ -238,65 +277,67 @@
 							"type": "string"
 						}
 					}
-					
-				}
-				
-			}
-		},	
-		"currency": {
-			"type": "string",
-			"description": "The currency code used throughout the document when describing dollar amounts.",
-			"default": "USD"			
-		},
-		"rateAssumptions": {
-			"type": "object",
-			"required": [ "currency" ],
-			"oneOf": [ "hourlyRate", "salary" ],
-			"additionalProperties": true,
-			"properties": {
-				"hourlyRate": {
-					"description": "The amount of money a single person makes per hour to execute the process",
-					"type": "string"
-				},
-				"salary": {
-					"description": "The amount of money a single person per year to execute the process",
-					"type": "string"
 				}
 			}
 		},
-		"agenticUpliftTotals": {
-			"type": "object",
-			"description": "",
-			"properties": {	
-				"addedHoursSavedPerYear": { 
-					"$id": "AGENT_ADDED_SAVINGS",
-					"type": "integer",
-					"default": "0"
-				},
-				"typicalErrorReductionPercent": { 
-					"$id": "AGENT_ERROR_REDUCTION_PERCENT",
-					"type": "integer",
-					"default": "0"
-				},
-				"typicalCycleTimeReductionPercentt": { 
-					"$id": "AGENT_CYCLETIME_REDUCTION_PERCENT",
-					"type": "integer",
-					"default": "0"
-				},
-				"scopeExpansionHoursPerYear": { 
-					"$id": "AGENT_SCOPE_EXPANSION_HOURS_YEAR",
-					"type": "integer",
-					"default": "0"
-				}
-			}
-		},
-		"topOpportunities": {
-			
-		},
-		"stepLevelMapping": {},
-		"risksDependencies": {},
-		"notes": {
-			"type": "string"
-		}
+    "processFlowToBe": {
+      "$id": "TO_BE_PROCESS",
+      "description": "",
+      "type": "object",
+      "properties": {
+        "ToBeFlow": {
+          "$id": "TO_BE_PROCESS_FLOW",
+          "description": "Describes the to-be process as a flow chart",
+          "type": "array",
+          "items": {
+            "flowDescription": {
+              "$id": "FLOW_ID",
+              "description": "A short description of a step described as a flow chart process",
+              "type": "string"
+            },
+            "transitions": {
+              "description": "Describes how this the FLOW_ID transitions to a different FLOW_ID",
+              "type": "array",
+              "items": {
+                "transitionTo": {              
+                  "$id": "TO_BE_PROCESS_FLOW_TRANSITION",
+                  "description": "The FLOW_ID of the next TO_BE_PROCESS_FLOW item",
+                  "type": "string"
+                },
+                "condition": {
+                  "description": "The condition that must be present in order to move to the TO_BE_PROCESS_FLOW_TRANSITION",
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "outOfScope": {
+          "additionalProperties": true,
+          "description": "Steps or activities which will not be automated",
+          "type": "array",
+          "items": {
+            "stepNumber": {
+              "description": "The DETAILED_PROCESS_STEP_NUMBER which will not be automated in the TO-BE Process",
+              "type": "integer"
+            },
+            "reason": {
+              "description": "The reason why the step will not be automation",
+              "type": "string"
+            }
+          }
+        },
+        "inScope": {
+          "description": "Steps or activities which will not be automated",
+          "type": "array",
+          "items": {
+            "stepNumber": {
+              "description": "The DETAILED_PROCESS_STEP_NUMBER which will automated in the TO-BE Process",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
 	}
 }
