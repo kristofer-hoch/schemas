@@ -1,7 +1,302 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/kristofer-hoch/schemas/blob/main/process-design-schema.json",
+  "$id": "https://github.com/kristofer-hoch/schemas/blob/4c9dcd5773fc25c3d22fe94133f926bd2ea0cdff/json/process-design-schema.json",
   "title": "Process Design Document Schema",
-  "description": "A schema to show contents of a process design document",
-  "type": "object"
+  "description": "Process design document description",
+  "type": "object",
+	"required": [  ],
+	"properties": {
+		"company": {
+			"additionalProperties": true,
+			"description": "Basic information about the company which executes the process defined in the process definition document",
+			"required": [ "name", "id"],
+			"type": "object",
+			"properties": {
+				"name": {
+					"description": "The name of the company",
+					"type": "string"
+				},
+				"id": {
+					"description": "A unique identifier for the company",
+					"type": "string"
+				}
+			}
+		},
+		"processSummary": {
+			"$id": "PROCESS_SUMMARY_SECTION",
+			"additionalProperties": true,
+			"description": "A systematic, repeatable set of activities or tasks, performed in a specific sequence, to achieve a specific organizational goal or business outcome",
+			"required": [ "name", "asOfDate" ],
+			"type": "object",
+			"properties": {
+				"name": {
+					"description": "Name of the business process",
+					"type": "string"
+				},
+				"id": {
+					"description": "A unique identifier for the process",
+					"type": "string"
+				},
+				"department": {
+					"description": "The group within the business which executes the process",
+					"type": "string"
+				},
+				"asOfDate": {
+					"description": "The specific point in time used to indicate that the process is current and accurate as of that date",
+					"type": "string"
+				},
+				"": {
+				}
+			}
+		},
+		"employeeProfile": {
+			"$id": "EMPLOYEE_PROFILE_SECTION",
+			"additionalProperties": true,
+			"description": "Information about the employee or employees who execute the process on behalf of the customer",
+			"type": "object",
+			"properties": {
+				"averageWorkingDaysPerYear": {
+					"$id": "WORKING_DAYS",
+					"description": "The average number of days a single employee works per year. This number excludes off days, paid time off, and any other company-observed holidays",
+					"type": "integer"
+				},
+				"workingHoursPerDay": {
+					"$id": "WORKING_HOURS",
+					"description": "The legal number of hours an employee works per day. The number is defined in legislation for the country or a work contract between the company and employee.",
+					"type": "integer"
+				},
+				"averageEmployeeFullCostPerYear": {
+					"description": "The cost of an employee including salary and other benefits.",
+					"type": "integer"
+				}
+			}
+		},
+		"processVolumetry": {
+			"$id": "PROCESS_VOLUMETRY_SECTION",
+			"additionalProperties": true,
+			"description": "Information about how often a process is executed, and how much data is processed during the process execution",
+			"required": [],
+			"type": "object",
+			"properties": {
+				"frequency": {
+					"$id": "FREQ",
+					"description": "How often the process is executed.",
+					"$comment": "Numerical values of each valid value. hourly = WORKING_DAYS * WORKING_HOURS,daily = WORKING_DAYS; weekly = 52, bi-weekly = 26, monthly = 12, quarterly = 4, yearly = 1",
+					"type": "string",
+					"anyOf": "daily, weekly, bi-weekly, monthly, quarterly, yearly"
+				},
+				"averageActivityVolume": {
+					"$id": "VOLUMES",
+					"description": "The average number of incoming documents, files, requests, or transactions executed",
+					"type": "integer"
+				},
+				"averageActivityVolumePer": {
+					"$id": "VOLUMES_FREQUENCY",
+					"description": "The average number of incoming documents, files, requests, or transactions executed per employee or company",
+					"$comment": "Numerical values of each valid value. company = 0, employee = 1",
+					"type": "string",
+					"oneOf": [ "company","employee"]
+				},
+				"numberOfEmployeesExecuting": {
+					"$id": "NB_EMPLOYEES",
+					"description": "The number of employees currently executing the task or process",
+					"type": "integer"
+				},
+				"averageProcessingTime": {
+					"$id": "TIME_PER_TRANS",
+					"description": "The average amount of time, in minutes, it takes to process a single task or transaction",
+					"type": "integer"
+				},
+				"totalProcessingTime": {
+					"title": "Calculated Total Processing Time",
+					"$id": "TOTAL_PROC_TIME",
+					"description": "round(FREQ*VOLUMES*TIME_PER_TRANS*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
+					"type": "integer"
+				},
+				"averageErrorRate": {
+					"$id": "ERROR_RATE",
+					"description": "The average percentage of error occurances in the total volume of transactions",
+					"type": "integer"
+				},
+				"averageReworkTime": {
+					"$id": "REWORK_TIME",
+					"description": "The average amount of time, in minutes, it takes to rework a task or transaction that had an error",
+					"type": "integer"
+				},
+				"totalReworkTime": {
+					"$id": "TOTAL_REWORK_TIME",
+					"description": "round(FREQ*VOLUMES*REVIEW_TIME*(REVIEW_RATE/100)*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
+					"title": "Calculated total rework time at the level of the company",
+					"type": "integer"
+				},
+				"averageAudit": {
+					"$id": "REVIEW_RATE",
+					"description": "The average percentage of completed tasks or transactions that are audited",
+					"type": "integer"
+				},
+				"averageAuditTime": {
+					"$id": "REVIEW_TIME",
+					"description": "Average review or audit time per transaction",
+					"type": "integer"
+				},
+				"totalAuditTime": {
+					"$id": "TOTAL_REVIEW_TIME",
+					"description": "round(FREQ*VOLUMES*REVIEW_TIME*(REVIEW_RATE/100)*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
+					"title": "Calculated total audit/review time",
+					"type": "integer"
+				}
+			}
+		},
+		"asIsProcess": {
+			"$id": "AS_IS_PROCESS_SECTION",
+			"additionalProperties": "true",
+			"description": "The current, existing way a business process operates, serving as a baseline for analysis and improvement by detailing the process's steps, stakeholders, systems, and documentation in its present state before any changes are made. It provides a comprehensive, step-by-step view of how work is done now, highlighting inefficiencies and opportunities for optimization in preparation for designing a future, 'to-be' process",
+			"$comment": "Purpose of the As-Is Process Section, Baseline for Improvement: It establishes the 'now' state, providing a clear starting point to understand the scope and nature of the changes needed for improvement.; Stakeholder Alignment: Documenting the current process helps ensure everyone involved understands how things are done, reducing confusion and creating a shared understanding.; Identification of Opportunities: By mapping the current state, potential areas for optimization, efficiency gains, and resource allocation are revealed.; Support for To-Be Process Design: The insights gathered from the as-is analysis are crucial for designing a more effective and streamlined 'to-be' (future state) process.; Training and Onboarding: It can serve as a valuable resource for new hires or team members to quickly understand the existing workflow and how to execute their tasks.",
+			"type": "object",
+			"properties": {
+				"detailedProcessSteps": {
+					"$id": "DETAILED_PROCESS_STEPS",
+					"additionalProperties": "true",
+					"description": "Detailed step-by-step actions taken by any person who needs to execute the process.",
+					"type": "array",
+					"uniqueItems": [ "stepNumber" ],
+					"items": {
+						"stepNumber": {
+							"description": "The number that identifies the step's order in relative to other steps.",
+							"type": "integer"
+						},
+						"stepDescription": {
+							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
+							"type": "string"
+						}
+					}
+				},
+				"inputDataDescriptions": {
+					"$id": "inputDataDescriptions",
+					"description": "_____",
+					"type": "array",
+					"items": {
+						"stepNumber": {							
+							"description": "Refers to a step number in DETAILED_PROCESS_STEPS",
+							"type": "string"
+						},
+						"inputType": {
+							"description": "____",
+							"type": "____"
+						},
+						"location": {
+							"description": "____",
+							"type": "____"
+						},
+						"isNativelyDigital": {
+							"description": "Describes whether the input has a natively digital source or not.",
+							"type": "boolean"
+						},
+						"isDigitized": {
+							"description": "Describes whether the input is digitized from a non-digital source or not.",
+							"type": "boolean"
+						},
+						"isStructured": {
+							"description": "Describes whether the input is structured or not",
+							"type": "boolean"
+						}
+					}
+				},
+				"applicationsUsed": {
+					"$id": "PROCESS_APPLICATIONS",
+					"description": "",
+					"type": "array",
+					"uniqueItems": [],
+					"items": {
+						"applicationName": {
+							"$id": "APPLICATION_NAME",
+							"description": "The application's full name as given by the publisher",
+							"type": "string"
+						},
+						"commonName": {
+							"$id": "COMMON_NAME",
+							"description": "A common or short name often used in place of the APPLICATION_NAME",
+							"type": "string"
+						},
+						"version": {
+							"description": "The publisher's version of the application.",
+							"type": "string"
+						},
+						"licenseInfo": {
+							"description": "Information on how the application is licensed",
+							"type": "string"
+						}
+					}
+				},
+				"permissions": {
+					"$id": "PROCESS_REQUIRED_PERMISSIONS",
+					"description": "_____",
+					"type": "array",
+					"items": {
+						"permission": {
+							"description": "A description of the permission, i.e. an AD Group, an authorization in the application, a claim, etc.",
+							"type": "string"
+						}
+					}
+					
+				}
+				
+			}
+		},	
+		"currency": {
+			"type": "string",
+			"description": "The currency code used throughout the document when describing dollar amounts.",
+			"default": "USD"			
+		},
+		"rateAssumptions": {
+			"type": "object",
+			"required": [ "currency" ],
+			"oneOf": [ "hourlyRate", "salary" ],
+			"additionalProperties": true,
+			"properties": {
+				"hourlyRate": {
+					"description": "The amount of money a single person makes per hour to execute the process",
+					"type": "string"
+				},
+				"salary": {
+					"description": "The amount of money a single person per year to execute the process",
+					"type": "string"
+				}
+			}
+		},
+		"agenticUpliftTotals": {
+			"type": "object",
+			"description": "",
+			"properties": {	
+				"addedHoursSavedPerYear": { 
+					"$id": "AGENT_ADDED_SAVINGS",
+					"type": "integer",
+					"default": "0"
+				},
+				"typicalErrorReductionPercent": { 
+					"$id": "AGENT_ERROR_REDUCTION_PERCENT",
+					"type": "integer",
+					"default": "0"
+				},
+				"typicalCycleTimeReductionPercentt": { 
+					"$id": "AGENT_CYCLETIME_REDUCTION_PERCENT",
+					"type": "integer",
+					"default": "0"
+				},
+				"scopeExpansionHoursPerYear": { 
+					"$id": "AGENT_SCOPE_EXPANSION_HOURS_YEAR",
+					"type": "integer",
+					"default": "0"
+				}
+			}
+		},
+		"topOpportunities": {
+			
+		},
+		"stepLevelMapping": {},
+		"risksDependencies": {},
+		"notes": {
+			"type": "string"
+		}
+	}
 }
