@@ -44,8 +44,6 @@
 				"asOfDate": {
 					"description": "The specific point in time used to indicate that the process is current and accurate as of that date",
 					"type": "string"
-				},
-				"": {
 				}
 			}
 		},
@@ -162,182 +160,181 @@
 					"uniqueItems": [ "stepNumber" ],
 					"items": {
 						"stepNumber": {
-              "$id": "DETAILED_PROCESS_STEP_NUMBER",
+              				"$id": "DETAILED_PROCESS_STEP_NUMBER",
 							"description": "The number that identifies the step's order in relative to other steps.",
 							"type": "integer"
 						},
 						"stepDescription": {
-              "$id": "DETAILED_PROCESS_STEP_DESCRIPTION",
+              				"$id": "DETAILED_PROCESS_STEP_DESCRIPTION",
 							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
 							"type": "string"
 						},
-            "possibleExceptions": {
-              "$id": "POSSIBLE_EXCEPTION",
-              "description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
-              "type": "array",
-              "items": {
-                "exceptionType": {
-                  "description": "The type of error or exception",
-                  "oneOf": [ "buisness", "application", "other" ]
-                },
-                "reaction": {
-                  "description": "Steps taken in addition to any INDICATOR_RECOVERY_ACTION",
-                  "type": "string"
-                },
-                "indicators": {
-                  "description": "A list of ways the exception can be discovered",
-                  "type": "array",
-                  "items": {
-                    "indicator": {
-                      "$id": "PROBLEM_INDICATOR",
-                      "description": "How the exception or error is presented to the the user or how to discover the problem",
-                      "type": "string"
-                    },
-                    "recovery": {
-                      "$id": "INDICATOR_RECOVERY_ACTION",
-                      "description": "How to recover from the exception when this indicator is detected",
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-					}
-				},
-				"inputDataDescriptions": {
-					"$id": "inputDataDescriptions",
-					"description": "A description of the data or information used in the step",
+						"possibleExceptions": {
+							"$id": "POSSIBLE_EXCEPTION",
+							"description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
+							"type": "array",
+							"items": {
+								"exceptionType": {
+									"description": "The type of error or exception",
+									"oneOf": [ "buisness", "application", "other" ]
+								},
+								"reaction": {
+									"description": "Steps taken in addition to any INDICATOR_RECOVERY_ACTION",
+									"type": "string"
+								},
+								"indicators": {
+									"description": "A list of ways the exception can be discovered",
+									"type": "array",
+									"items": {
+										"indicator": {
+										"$id": "PROBLEM_INDICATOR",
+										"description": "How the exception or error is presented to the the user or how to discover the problem",
+										"type": "string"
+										},
+										"recovery": {
+											"$id": "INDICATOR_RECOVERY_ACTION",
+											"description": "How to recover from the exception when this indicator is detected",
+											"type": "string"
+										}	
+									}
+								}
+							}
+						}
+					},
+					"inputDataDescriptions": {
+						"$id": "inputDataDescriptions",
+						"description": "A description of the data or information used in the step",
+						"type": "array",
+						"items": {
+							"stepNumber": {							
+								"description": "Refers to a step number in DETAILED_PROCESS_STEPS",
+								"type": "string"
+							},
+							"inputs": {
+								"description": "All the data and information needed to execute the process step",
+								"type": "array",
+								"items": {
+									"inputType": {
+									"description": "Describe the type of information, i.e. Excel File, Website information, email, paper, etc.",
+									"type": "string"
+									},
+									"location": {
+									"description": "Where the input type can be found, i.e. Email Box, Website, ",
+									"type": "string"
+									},
+									"isNativelyDigital": {
+									"description": "Describes whether the input has a natively digital source or not.",
+									"type": "boolean"
+									},
+									"isDigitized": {
+									"description": "Describes whether the input is digitized from a non-digital source or not.",
+									"type": "boolean"
+									},
+									"isStructured": {
+									"description": "Describes whether the input is structured or not",
+									"type": "boolean"
+									}
+								}
+							}
+						}
+					},
+					"applicationsUsed": {
+						"$id": "PROCESS_APPLICATIONS",
+						"description": "A list of all applications, systems, and tools used to execute the process step.",
+						"type": "array",
+						"items": {
+							"applicationName": {
+								"$id": "APPLICATION_NAME",
+								"description": "The application's full name as given by the publisher",
+								"type": "string"
+							},
+							"commonName": {
+								"$id": "COMMON_NAME",
+								"description": "A common or short name often used in place of the APPLICATION_NAME",
+								"type": "string"
+							},
+							"version": {
+								"description": "The publisher's version of the application.",
+								"type": "string"
+							},
+							"licenseInfo": {
+								"description": "Information on how the application is licensed",
+								"type": "string"
+							},
+							"permissions": {
+								"$id": "PROCESS_REQUIRED_PERMISSIONS",
+								"description": "_____",
+								"type": "array",
+								"items": {
+									"permission": {
+										"description": "A description of the permission, i.e. an AD Group, an authorization in the application, a claim, etc.",
+										"type": "string"
+									}
+								}
+							}
+						}
+					}		
+				}		
+			}
+		},
+		"processFlowToBe": {
+			"$id": "TO_BE_PROCESS",
+			"description": "Describes the to-be process flow",
+			"type": "object",
+			"properties": {
+				"ToBeFlow": {
+					"$id": "TO_BE_PROCESS_FLOW",
+					"description": "Describes the to-be process as a flow chart",
 					"type": "array",
 					"items": {
-						"stepNumber": {							
-							"description": "Refers to a step number in DETAILED_PROCESS_STEPS",
+						"flowDescription": {
+							"$id": "FLOW_ID",
+							"description": "A short description of a step described as a flow chart process",
 							"type": "string"
 						},
-            "inputs": {
-              "description": "All the data and information needed to execute the process step",
-              "type": "array",
-              "items": {
-                "inputType": {
-                  "description": "Describe the type of information, i.e. Excel File, Website information, email, paper, etc.",
-                  "type": "string"
-                },
-                "location": {
-                  "description": "Where the input type can be found, i.e. Email Box, Website, ",
-                  "type": "string"
-                },
-                "isNativelyDigital": {
-                  "description": "Describes whether the input has a natively digital source or not.",
-                  "type": "boolean"
-                },
-                "isDigitized": {
-                  "description": "Describes whether the input is digitized from a non-digital source or not.",
-                  "type": "boolean"
-                },
-                "isStructured": {
-                  "description": "Describes whether the input is structured or not",
-                  "type": "boolean"
-                }
-              }
-            }
+						"transitions": {
+							"description": "Describes how this the FLOW_ID transitions to a different FLOW_ID",
+							"type": "array",
+							"items": {
+								"transitionTo": {              
+									"$id": "TO_BE_PROCESS_FLOW_TRANSITION",
+									"description": "The FLOW_ID of the next TO_BE_PROCESS_FLOW item",
+									"type": "string"
+								},
+								"condition": {
+									"description": "The condition that must be present in order to move to the TO_BE_PROCESS_FLOW_TRANSITION",
+									"type": "string"
+								}
+							}
+						}
 					}
 				},
-				"applicationsUsed": {
-					"$id": "PROCESS_APPLICATIONS",
-					"description": "",
+				"outOfScope": {
+					"additionalProperties": true,
+					"description": "Steps or activities which will not be automated",
 					"type": "array",
-					"uniqueItems": [],
 					"items": {
-						"applicationName": {
-							"$id": "APPLICATION_NAME",
-							"description": "The application's full name as given by the publisher",
-							"type": "string"
+						"stepNumber": {
+							"description": "The DETAILED_PROCESS_STEP_NUMBER which will not be automated in the TO-BE Process",
+							"type": "integer"
 						},
-						"commonName": {
-							"$id": "COMMON_NAME",
-							"description": "A common or short name often used in place of the APPLICATION_NAME",
-							"type": "string"
-						},
-						"version": {
-							"description": "The publisher's version of the application.",
-							"type": "string"
-						},
-						"licenseInfo": {
-							"description": "Information on how the application is licensed",
+						"reason": {
+							"description": "The reason why the step will not be automation",
 							"type": "string"
 						}
 					}
 				},
-				"permissions": {
-					"$id": "PROCESS_REQUIRED_PERMISSIONS",
-					"description": "_____",
+				"inScope": {
+					"description": "Steps or activities which will not be automated",
 					"type": "array",
 					"items": {
-						"permission": {
-							"description": "A description of the permission, i.e. an AD Group, an authorization in the application, a claim, etc.",
-							"type": "string"
+						"stepNumber": {
+							"description": "The DETAILED_PROCESS_STEP_NUMBER which will automated in the TO-BE Process",
+							"type": "integer"
 						}
 					}
 				}
 			}
-		},
-    "processFlowToBe": {
-      "$id": "TO_BE_PROCESS",
-      "description": "",
-      "type": "object",
-      "properties": {
-        "ToBeFlow": {
-          "$id": "TO_BE_PROCESS_FLOW",
-          "description": "Describes the to-be process as a flow chart",
-          "type": "array",
-          "items": {
-            "flowDescription": {
-              "$id": "FLOW_ID",
-              "description": "A short description of a step described as a flow chart process",
-              "type": "string"
-            },
-            "transitions": {
-              "description": "Describes how this the FLOW_ID transitions to a different FLOW_ID",
-              "type": "array",
-              "items": {
-                "transitionTo": {              
-                  "$id": "TO_BE_PROCESS_FLOW_TRANSITION",
-                  "description": "The FLOW_ID of the next TO_BE_PROCESS_FLOW item",
-                  "type": "string"
-                },
-                "condition": {
-                  "description": "The condition that must be present in order to move to the TO_BE_PROCESS_FLOW_TRANSITION",
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "outOfScope": {
-          "additionalProperties": true,
-          "description": "Steps or activities which will not be automated",
-          "type": "array",
-          "items": {
-            "stepNumber": {
-              "description": "The DETAILED_PROCESS_STEP_NUMBER which will not be automated in the TO-BE Process",
-              "type": "integer"
-            },
-            "reason": {
-              "description": "The reason why the step will not be automation",
-              "type": "string"
-            }
-          }
-        },
-        "inScope": {
-          "description": "Steps or activities which will not be automated",
-          "type": "array",
-          "items": {
-            "stepNumber": {
-              "description": "The DETAILED_PROCESS_STEP_NUMBER which will automated in the TO-BE Process",
-              "type": "integer"
-            }
-          }
-        }
-      }
-    }
+		}
 	}
 }
