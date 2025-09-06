@@ -15,10 +15,6 @@
 				"name": {
 					"description": "The name of the company",
 					"type": "string"
-				},
-				"id": {
-					"description": "A unique identifier for the company",
-					"type": "string"
 				}
 			}
 		},
@@ -26,15 +22,11 @@
 			"$id": "PROCESS_SUMMARY_SECTION",
 			"additionalProperties": true,
 			"description": "A systematic, repeatable set of activities or tasks, performed in a specific sequence, to achieve a specific organizational goal or business outcome",
-			"required": [ "asOfDate", "id", "name"  ],
+			"required": [ "asOfDate", "name"  ],
 			"type": "object",
 			"properties": {
 				"name": {
 					"description": "Name of the business process",
-					"type": "string"
-				},
-				"id": {
-					"description": "A unique identifier for the process",
 					"type": "string"
 				},
 				"department": {
@@ -73,7 +65,6 @@
 			"$id": "PROCESS_VOLUMETRY_SECTION",
 			"additionalProperties": true,
 			"description": "Information about how often a process is executed, and how much data is processed during the process execution",
-			"required": [],
 			"type": "object",
 			"properties": {
 				"frequency": {
@@ -81,7 +72,7 @@
 					"description": "How often the process is executed.",
 					"$comment": "Numerical values of each valid value. hourly = WORKING_DAYS * WORKING_HOURS,daily = WORKING_DAYS; weekly = 52, bi-weekly = 26, monthly = 12, quarterly = 4, yearly = 1",
 					"type": "string",
-					"anyOf": "daily, weekly, bi-weekly, monthly, quarterly, yearly"
+					"enum": [ "daily", "weekly", "bi-weekly", "monthly", "quarterly", "yearly" ]
 				},
 				"averageActivityVolume": {
 					"$id": "VOLUMES",
@@ -93,7 +84,7 @@
 					"description": "The average number of incoming documents, files, requests, or transactions executed per employee or company",
 					"$comment": "Numerical values of each valid value. company = 0, employee = 1",
 					"type": "string",
-					"oneOf": [ "company","employee"]
+					"enum": [ "company","employee"]
 				},
 				"numberOfEmployeesExecuting": {
 					"$id": "NB_EMPLOYEES",
