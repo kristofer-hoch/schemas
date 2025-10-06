@@ -1,32 +1,44 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "http://www.uipath.com/clientsuccess/agentic-uplift-schema.json",
+	"$id": "https://github.com/kristofer-hoch/schemas/blob/69cbeb44504a90b1ac1f49e2589d0f48240f4eb2/json/agentic-uplift-schema.json",
 	"type": "object",
 	"title": "Process Definition Document - Agentic Uplift Schema",
 	"description": "A document to organize data showing how an AI Agent can help lower costs, errors, and time-to-complete of a business process",
 	"required": [ ],
 	"properties": {
-		"currency": {
-			"type": "string",
-			"description": "The currency code used throughout the document when describing dollar amounts.",
-			"default": "USD"			
-		},
-		"rateAssumptions": {
-			"type": "object",
-			"required": [ "currency" ],
-			"oneOf": [ "hourlyRate", "salary" ],
-			"additionalProperties": true,
-			"properties": {
-				"hourlyRate": {
-					"description": "The amount of money a single person makes per hour to execute the process",
-					"type": "string"
-				},
-				"salary": {
-					"description": "The amount of money a single person per year to execute the process",
-					"type": "string"
-				}
-			}
-		},
+        "processDefinitionDocument": {
+            "$id": "ANALYZED_PDD",
+            "$ref": "https://github.com/kristofer-hoch/schemas/blob/4c9dcd5773fc25c3d22fe94133f926bd2ea0cdff/json/process-design-schema.json"
+        },
+        "agentificationSteps": {
+            "description": "Steps within the ANALYZED_PDD which could benefit from agentification",
+            "type": "array",
+            "items": {
+                "stepNumber": {
+                    "description": "The DETAILED_PROCESS_STEP_NUMBER in the ANALYZED_PDD from the DETAILED_PROCESS_STEPS section",
+                    "type": "integer"
+                },
+                "stepDescription": {
+                    "description": "The DETAILED_PROCESS_STEP_DESCRIPTION in the ANALYZED_PDD from the DETAILED_PROCESS_STEPS section",
+                    "type": "string"
+                },
+                "hasAgenticPotential": {
+                    "$id": "HAS_AGENTIC_POTENTIAL",
+                    "description": "A yes or no describing whether or not the step has agentic potential",
+                    "type": "boolean"
+                },
+                "agenticPotentialConfidenceScore": {
+                    "$id": "AGENTIC_POTENTIAL_CONFIDENCE_SCORE",
+                    "description": "The confidence score of the HAS_AGENTIC_POTENTIAL value",
+                    "type": "integer"
+                },
+                "agenticPotentialConfidenceReason": {
+                    "description": "The reasonining used to determine both HAS_AGENTIC_POTENTIAL and AGENTIC_POTENTIAL_CONFIDENCE_SCORE",
+                    "type": "integer"
+                }
+            }
+
+        },
 		"agenticUpliftTotals": {
 			"type": "object",
 			"description": "",
