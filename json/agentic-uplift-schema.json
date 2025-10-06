@@ -4,7 +4,6 @@
 	"type": "object",
 	"title": "Process Definition Document - Agentic Uplift Schema",
 	"description": "A document to organize data showing how an AI Agent can help lower costs, errors, and time-to-complete of a business process",
-	"required": [ ],
 	"properties": {
         "processDefinitionDocument": {
             "$id": "ANALYZED_PDD",

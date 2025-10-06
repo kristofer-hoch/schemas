@@ -14,7 +14,8 @@
 			"properties": {
 				"name": {
 					"description": "The name of the company",
-					"type": "string"
+					"type": "string",
+					"$comment": "Locate the Company Name in a Process Definition Document (PDD) by following these steps: First, review the Title Page or Cover Sheet, where the company name is typically listed at the top or in the header/footer. Second, look in the Document Header/Footer: Many templates include the company name on every page. Third, review the Introduction or Purpose Section: The company name may be mentioned when describing the business context. Fourth, check Metadata or Document Info: The company name might appear in the authoring or ownership details. Fifth, search for keywords: company, organization, or a known brand name. Finally, if not explicitly stated, the company name may be inferred from email addresses, logos, or document styling."
 				}
 			}
 		},
@@ -27,15 +28,18 @@
 			"properties": {
 				"name": {
 					"description": "Name of the business process",
-					"type": "string"
+					"type": "string",
+					"$comment": "Find the name in a Process Definition Document (PDD) by following these steps: First, check the Title Page or Header: Often, the process name is prominently displayed in the document title or subtitle. Second, look in the Introduction or Purpose Section: This section typically states the name and objective of the process being defined. Third, review the Document Metadata or Revision Table: Some PDDs include process name, version, and owner details here. Fourth, scan for Diagrams or Flowcharts: Business process names are often labeled on BPMN or flow diagrams. Fifth, search for key terms: Process Name, Business Process, Process Overview. Finally, if the process name isn't explicitly labeled, infer it from the main activity being described throughout the document."
 				},
 				"department": {
 					"description": "The group within the business which executes the process",
-					"type": "string"
+					"type": "string",
+					"$comment": "Find the department that executes the process in a Process Definition Document (PDD), check sections like Roles and Responsibilities, Process Ownership, or Process Overview. Look for mentions of specific departments, teams, or business units responsible for executing or managing the process. Search for keywords like 'department,' 'team,' 'responsible,' or 'owner.' The information may also appear in RACI charts or swimlanes in process diagrams."
 				},
 				"asOfDate": {
 					"description": "The specific point in time used to indicate that the process is current and accurate as of that date",
-					"type": "string"
+					"type": "string",
+					"$comment": "Find the As-of Date in a Process Definition Document (PDD), check the title page, document header/footer, or version control/revision history section. It may be labeled as 'As-of Date,' 'Effective Date,' 'Last Updated,' or 'Version Date.' Use Ctrl+F to search these terms. This date indicates the most recent update or the point in time the document reflects."
 				}
 			}
 		},
@@ -64,75 +68,85 @@
 		"processVolumetry": {
 			"$id": "PROCESS_VOLUMETRY_SECTION",
 			"additionalProperties": true,
-			"description": "Information about how often a process is executed, and how much data is processed during the process execution",
+			"description": "Quantitative data on how frequently a process is executed and the volume of transactions or items it handles. Its purpose is to help assess the process’s workload, identify peak usage periods, and evaluate the feasibility and benefits of automation. This information supports resource planning, system performance analysis, and the design of scalable, efficient solutions.",
 			"type": "object",
 			"properties": {
 				"frequency": {
 					"$id": "FREQ",
 					"description": "How often the process is executed.",
-					"$comment": "Numerical values of each valid value. hourly = WORKING_DAYS * WORKING_HOURS,daily = WORKING_DAYS; weekly = 52, bi-weekly = 26, monthly = 12, quarterly = 4, yearly = 1",
+					"$comment": "Find the process execution frequency in a Process Definition Document (PDD), especially if expressed in hours, follow these steps: First, look in the Process Overview or Description Section: Frequency is often stated here in terms like 'runs every X hours' or 'executed every 4 hours.' Second, check the Inputs/Triggers Section: This may describe how often the process is triggered (e.g., 'triggered every 2 hours'). Third, Review the Schedule or Timing Details: Some PDDs include a dedicated section outlining time intervals or schedules. Fourth, search for Time-Based Keywords: Use Ctrl+F to find terms like 'hour,' 'every,' 'frequency,' 'interval,' 'schedule,' or 'recurs.' Fourth, check for Time Expressions: Frequency may be written as 'hourly,' 'every X hours,' 'twice per day,' or 'every 8h.' Finally, if not explicitly stated, infer frequency from trigger events or timing-related conditions in the process flow. Once found or inferred, represent the number using one of the valid terms: daily, weekly, bi-weekly, monthly, quarterly, yearly.",
 					"type": "string",
 					"enum": [ "daily", "weekly", "bi-weekly", "monthly", "quarterly", "yearly" ]
 				},
 				"averageActivityVolume": {
 					"$id": "VOLUMES",
 					"description": "The average number of incoming documents, files, requests, or transactions executed",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "First, identify the activity: Locate the specific task or step within the process. Second, find volume data: Look for historical data on how often the activity occurs over a defined period (e.g., daily, weekly, monthly). Third, calculate the average by using this formula: Average Activity Volume = Total Volume over Time Period ÷ Number of Time Units. (Example: If an activity occurred 3,000 times over 30 days: 3,000 ÷ 30 = 100 activities/day). Finally, check the PDD’s metrics or reporting section—this information is often summarized there."
 				},
 				"averageActivityVolumePer": {
 					"$id": "VOLUMES_FREQUENCY",
 					"description": "The average number of incoming documents, files, requests, or transactions executed per employee or company",
-					"$comment": "Numerical values of each valid value. company = 0, employee = 1",
 					"type": "string",
+					"$comment": "Check the data source or volume description in the Process Definition Document. If the volume is linked to individual roles, users, or Full-Time Equivalents (FTEs), the basis is employee. If the volume reflects total counts across departments or the organization, the basis is company. Result is either employee or company based on this context.",
 					"enum": [ "company","employee"]
 				},
 				"numberOfEmployeesExecuting": {
 					"$id": "NB_EMPLOYEES",
 					"description": "The number of employees currently executing the task or process",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the number of full-time employees (FTEs) needed to execute the process in a Process Definition Document:  First, locate process volume: Find the total activity volume over a time period. Second, find average handling time (AHT): Identify how long each activity takes. Third, use FTE formula: FTEs = (Total Volume × AHT) ÷ Available Working Time per FTE. Example: If 10,000 tasks × 5 minutes each ÷ 10,000 minutes/month per FTE = 5 FTEs. Finally, The PDD may directly state this or include data to calculate it."
 				},
 				"averageProcessingTime": {
 					"$id": "TIME_PER_TRANS",
 					"description": "The average amount of time, in minutes, it takes to process a single task or transaction",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the Average Processing Time of a process in a Process Definition Document: First, identify the process steps: Locate the task(s) being measured. Second, find time data: Look for time per transaction or task, often labeled as Average Handling Time (AHT) or Processing Time. Third, confirm unit of measure: Ensure it's expressed per transaction (e.g., minutes per task). Finally, this value is usually listed in the metrics or activity description sections."
 				},
 				"totalProcessingTime": {
 					"title": "Calculated Total Processing Time",
 					"$id": "TOTAL_PROC_TIME",
 					"description": "round(FREQ*VOLUMES*TIME_PER_TRANS*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Calculate Total Processing Time using this formula: Total Processing Time (hours) = (Frequency Factor × Average Activity Volume × Average Processing Time per Transaction × ((Number of Employees Executing × Volume Basis Factor) + (1 - Volume Basis Factor))) ÷ 60. Where: Frequency Factor is based on how often the process runs (daily=1, weekly=1/5, bi-weekly=1/10, monthly=1/22, quarterly=1/66, yearly=1/260). Average Activity Volume is the number of transactions processed in the time period. Average Processing Time per Transaction is in minutes. Number of Employees Executing is the FTEs involved. Volume Basis Factor is 1 if volume is per employee, 0 if per company. Example: For a daily process with 100 transactions, 5 minutes each, executed by 3 employees on a per-employee basis: Total Processing Time = (1 × 100 × 5 × ((3 × 1) + (1 - 1))) ÷ 60 = 25 hours."
 				},
 				"averageErrorRate": {
 					"$id": "ERROR_RATE",
 					"description": "The average percentage of error occurances in the total volume of transactions",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the Average Error Rate in a Process Definition Document: First, locate quality or performance metrics and find data on total transactions and the number of errors. Second, use the formula: Average Error Rate (%) = (Number of Errors ÷ Total Transactions) × 100. Finally, this data is typically found in the KPIs, metrics, or risk sections of the document."
 				},
 				"averageReworkTime": {
 					"$id": "REWORK_TIME",
 					"description": "The average amount of time, in minutes, it takes to rework a task or transaction that had an error",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the Average Rework Time of a single transaction in a Process Definition Document. Locate error handling or rework section: Find where rework activities are described. Identify rework time data: Look for the time taken to correct a task with an error—often listed as rework time per transaction. Verify unit: Ensure it's given in minutes per reworked transaction. If only total rework time and error count are provided, use: Average Rework Time = Total Rework Time ÷ Number of Errors."
 				},
 				"totalReworkTime": {
 					"$id": "TOTAL_REWORK_TIME",
 					"description": "round(FREQ*VOLUMES*REVIEW_TIME*(REVIEW_RATE/100)*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
 					"title": "Calculated total rework time at the level of the company",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Calculate Total Rework Time using this formula: Total Rework Time (hours) = (Frequency Factor × Average Activity Volume × Average Rework Time per Transaction × (Review Rate ÷ 100) × ((Number of Employees Executing × Volume Basis Factor) + (1 - Volume Basis Factor))) ÷ 60. Where: Frequency Factor is based on how often the process runs (daily=1, weekly=1/5, bi-weekly=1/10, monthly=1/22, quarterly=1/66, yearly=1/260). Average Activity Volume is the number of transactions processed in the time period. Average Rework Time per Transaction is in minutes. Number of Employees Executing is the FTEs involved. Volume Basis Factor is 1 if volume is per employee, 0 if per company. Example: For a daily process with 100 transactions, 5 minutes each, executed by 3 employees on a per-employee basis: Total Rework Time = (1 × 100 × 5 × (0.1) × ((3 × 1) + (1 - 1))) ÷ 60 = 25 hours."
 				},
-				"averageAudit": {
+				"averageAuditRate": {
 					"$id": "REVIEW_RATE",
 					"description": "The average percentage of completed tasks or transactions that are audited",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the Average Audit Rate in a Process Definition Document: First, locate the quality assurance or audit sections and find data on the total number of completed transactions and the number of audited transactions. Second, use the formula: Average Audit Rate (%) = (Number of Audited Transactions ÷ Total Completed Transactions) × 100. Finally, this data is typically found in the KPIs, metrics, or quality sections of the document."
 				},
 				"averageAuditTime": {
 					"$id": "REVIEW_TIME",
 					"description": "Average review or audit time per transaction",
-					"type": "integer"
+					"type": "integer",
+					"$comment": "Find the Average Audit Time in a Process Definition Document: First, locate the quality assurance or audit sections and find data on the total time spent on audits and the number of audited transactions. Second, use the formula: Average Audit Time (minutes) = Total Audit Time ÷ Number of Audited Transactions. Finally, this data is typically found in the KPIs, metrics, or quality sections of the document."
 				},
 				"totalAuditTime": {
 					"$id": "TOTAL_REVIEW_TIME",
 					"description": "round(FREQ*VOLUMES*REVIEW_TIME*(REVIEW_RATE/100)*((NB_EMPLOYEES*VOLUMES_FREQUENCY)+(1-VOLUMES_FREQUENCY))/60,0)",
 					"title": "Calculated total audit/review time",
-					"type": "integer"
+					"type": "integer",
+					"#comment": "Calculate Total Audit Time using this formula: Total Audit Time (hours) = (Frequency Factor × Average Activity Volume × Average Audit Time per Transaction × (Audit Rate ÷ 100) × ((Number of Employees Executing × Volume Basis Factor) + (1 - Volume Basis Factor))) ÷ 60. Where: Frequency Factor is based on how often the process runs (daily=1, weekly=1/5, bi-weekly=1/10, monthly=1/22, quarterly=1/66, yearly=1/260). Average Activity Volume is the number of transactions processed in the time period. Average Audit Time per Transaction is in minutes. Number of Employees Executing is the FTEs involved. Volume Basis Factor is 1 if volume is per employee, 0 if per company. Example: For a daily process with 100 transactions, 5 minutes each, executed by 3 employees on a per-employee basis: Total Audit Time = (1 × 100 × 5 × (0.1) × ((3 × 1) + (1 - 1))) ÷ 60 = 25 hours."
 				}
 			}
 		},
@@ -146,7 +160,7 @@
 				"detailedProcessSteps": {
 					"$id": "DETAILED_PROCESS_STEPS",
 					"additionalProperties": "true",
-					"description": "Detailed step-by-step actions taken by any person who needs to execute the process.",
+					"description": "Provide a clear, step-by-step breakdown of how a process is currently performed, ensuring consistency, accuracy, and understanding across all stakeholders. This detailed documentation helps identify inefficiencies, automation opportunities, and potential risks, while also serving as a foundation for training, development, and quality assurance. It ensures that the process can be replicated and analyzed effectively, supporting both current operations and future improvements.",
 					"type": "array",
 					"uniqueItems": [ "stepNumber" ],
 					"items": {
@@ -159,12 +173,18 @@
               				"$id": "DETAILED_PROCESS_STEP_DESCRIPTION",
 							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
 							"type": "string"
-						},
-						"possibleExceptions": {
+						}
+
+					},
+					"possibleExceptions": {
 							"$id": "POSSIBLE_EXCEPTION",
 							"description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
 							"type": "array",
 							"items": {
+								"stepNumber": {
+									"description": "Refers to a step number in DETAILED_PROCESS_STEPS.",
+									"type": "integer"
+								},
 								"exceptionType": {
 									"description": "The type of error or exception",
 									"oneOf": [ "buisness", "application", "other" ]
@@ -272,6 +292,7 @@
 			"$id": "TO_BE_PROCESS",
 			"description": "Describes the to-be process flow",
 			"type": "object",
+			"$comment": "The AS-IS Process section of a Process Definition Document (PDD) describes the current state of the process before automation or improvement. It outlines: Steps currently performed, Roles involved, Systems used, Pain points, inefficiencies, and exceptions. How to Find It: Look for a section titled "AS-IS Process," "Current State," or "Existing Process". Often located early in the document, before TO-BE or future state descriptions. May include process maps, flowcharts, or step-by-step descriptions. This section serves as the baseline for identifying automation opportunities."
 			"properties": {
 				"ToBeFlow": {
 					"$id": "TO_BE_PROCESS_FLOW",
