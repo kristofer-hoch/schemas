@@ -157,6 +157,51 @@
 			"$comment": "Purpose of the As-Is Process Section, Baseline for Improvement: It establishes the 'now' state, providing a clear starting point to understand the scope and nature of the changes needed for improvement.; Stakeholder Alignment: Documenting the current process helps ensure everyone involved understands how things are done, reducing confusion and creating a shared understanding.; Identification of Opportunities: By mapping the current state, potential areas for optimization, efficiency gains, and resource allocation are revealed.; Support for To-Be Process Design: The insights gathered from the as-is analysis are crucial for designing a more effective and streamlined 'to-be' (future state) process.; Training and Onboarding: It can serve as a valuable resource for new hires or team members to quickly understand the existing workflow and how to execute their tasks.",
 			"type": "object",
 			"properties": {
+				"highLevelAsIsProcessFlow": {
+					"$id": "HIGH_LEVEL_AS_IS_PROCESS_FLOW",
+					"$comment": "The AS-IS High Level Process Flow diagram is a visual representation of the current (non-automated) business process at a macro level. It outlines the main activities, stakeholder roles, and system interactions in a simplified, sequential manner. The diagram typically uses flowchart elements (e.g., rectangles for tasks, arrows for flow) to illustrate how work moves through the process. To locate the AS-IS High Level Process Flow in a PDD: Look in the early sections of the document, where the current state is usually introduced before future (TO-BE) designs. Scan for diagrams—the high-level flow is typically a simple chart with major steps and involved roles, not detailed instructions. The AS-IS High Level Process Flow gives a simplified visual summary of the current process, making it easier to understand the overall structure. In contrast, the AS-IS Detailed Process Steps break the process down into precise, executable actions, often used for identifying automation opportunities or process inefficiencies.",
+					"description": "A high-level overview of the current process flow, providing a simplified representation of the main steps involved without going into detailed descriptions or exceptions.",
+					"type": "array",
+					"items": {
+						"highLevelAsIsShapeId": {
+			  				"$id": "HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID",
+							"$comment": "The HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID is a unique identifier assigned to each shape or step in the AS-IS High Level Process Flow diagram. It helps distinguish and reference specific activities, decisions, or events within the process flow. This ID is typically a number or code that corresponds to a particular shape in the flowchart, allowing for easy identification and discussion of each part of the process. To locate the HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID in a PDD: Look directly on the AS-IS High Level Process Flow diagram itself, where each shape should be labeled with its unique ID. If not visible on the diagram, check the accompanying legend or key that explains the symbols and their corresponding IDs. The HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID is essential for mapping out transitions and understanding how each step connects within the overall process. This ID needs to be automatically assigned so it can be referenced in Transitions",
+							"description": "The number that uniquely identifies an item in the flowchart.",
+							"type": "integer"
+						},
+						"highLevelAsIsShapeText": {
+              				"$id": "HIGH_LEVEL_AS_IS_SHAPE_TEXT",
+							"$comment": "The HIGH_LEVEL_AS_IS_SHAPE_TEXT is a brief description or label associated with each shape in the AS-IS High Level Process Flow diagram. It provides a concise summary of the activity, decision, or event represented by that shape, helping to clarify its purpose within the overall process. This text is typically a few words or a short phrase that captures the essence of what happens at that step in the flowchart. To locate the HIGH_LEVEL_AS_IS_SHAPE_TEXT in a PDD: Look directly on the AS-IS High Level Process Flow diagram, where each shape should contain its corresponding text label. If not visible on the diagram, check any accompanying documentation or legend that explains the symbols and their meanings. The HIGH_LEVEL_AS_IS_SHAPE_TEXT is crucial for understanding the function of each step in the process and how it contributes to the overall workflow.",
+							"description": "The text stored within the shape.",
+							"type": "string"
+						},
+						"highLevelAsIsShapeDescription": {
+              				"$id": "HIGH_LEVEL_AS_IS_SHAPE_DESCRIPTION",
+							"$comment": "The HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE is the specific geometric figure used in the AS-IS High Level Process Flow diagram to represent different types of activities, decisions, or events within the process. Common shapes include: Oval (Start/End), Rectangle (Process Step), Diamond (Decision Point), Parallelogram (Input/Output), Arrow (Flow Direction), and others. Each shape has a standardized meaning in flowcharting, helping to visually communicate the nature of each step in the process. To locate the HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE in a PDD: Look directly on the AS-IS High Level Process Flow diagram, where each step is represented by a specific shape. If not immediately clear, refer to any legend or key provided with the diagram that explains the shapes used and their meanings. The HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE is essential for interpreting the flowchart correctly and understanding how different types of actions are represented within the process.",
+							"description": "The shape used in the flowchart to represent the step. Common shapes include: Oval (Start/End), Rectangle (Process Step), Diamond (Decision Point), Parallelogram (Input/Output), Arrow (Flow Direction), and others",
+							"type": "string"
+						},
+						"highLevelAsIsShapeTransitions": {
+							"$comment": "The HIGH_LEVEL_AS_IS_SHAPE_TRANSITIONS describes the possible transitions from one shape to another within the AS-IS High Level Process Flow diagram. Each transition is defined by a starting shape, an ending shape, and the conditions that must be met for the transition to occur. This information is crucial for understanding the flow of the process and how different steps are interconnected. To locate the HIGH_LEVEL_AS_IS_SHAPE_TRANSITIONS in a PDD: Look for sections that outline the process flow in detail, including any diagrams or tables that map out the transitions between shapes. The HIGH_LEVEL_AS_IS_SHAPE_TRANSITIONS provide a roadmap for navigating the process and identifying potential areas for improvement or automation.",
+							"description": "Describes how this the HIGH_LEVEL_AS_IS_SHAPE_TEXT transitions to a different HIGH_LEVEL_AS_IS_SHAPE_TEXT",
+							"type": "array",
+							"items": {
+								"transitionToShapeId": {
+									"$id": "HIGH_LEVEL_AS_IS_TRANSITION_TO_SHAPE_ID",
+									"$comment": "The transitionTo field in the HIGH_LEVEL_AS_IS_TRANSITION_TO_SHAPE_IDS specifies the destination shape that the process flow moves to from the current shape. It indicates the next step in the AS-IS High Level Process Flow diagram, allowing for a clear understanding of how the process progresses from one activity or decision point to another. This field is essential for mapping out the sequence of actions within the process and ensuring that all possible paths are accounted for. To locate the transitionTo information in a PDD: Look for sections that detail the flow of the process, including any diagrams or tables that illustrate how each shape connects to others. The transitionTo field helps clarify the direction of the process and supports effective analysis and improvement efforts.",
+									"description": "The HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID of the next HIGH_LEVEL_AS_IS_PROCESS_FLOW item",
+									"type": "string"
+								},
+								"transitionToCondition": {
+									"$id": "HIGH_LEVEL_AS_IS_TRANSITION_TO_CONDITION",
+									"$comment": "The condition field in the HIGH_LEVEL_AS_IS_TRANSITION_TO_CONDITION specifies the criteria or requirements that must be met for the process flow to move from the current shape to the destination shape. It outlines the specific circumstances under which a transition occurs, helping to define the logic and decision-making within the AS-IS High Level Process Flow diagram. This field is crucial for understanding how different paths are taken based on various factors or inputs, allowing for a more accurate representation of the process. To locate the condition information in a PDD: Look for sections that describe the decision points or branching logic within the process, including any diagrams or tables that illustrate how transitions are determined. The condition field provides insight into the rules governing the flow of the process and supports effective analysis and improvement efforts. If a transition has no condition, then label it as 'Conditionless'",
+									"description": "The condition that must be present in order to move to the HIGH_LEVEL_AS_IS_FLOWCHART_SHAPE_ID",
+									"type": "string"
+								}
+							}
+						}
+					}				
+				},
 				"detailedProcessSteps": {
 					"$id": "DETAILED_PROCESS_STEPS",
 					"additionalProperties": "true",
@@ -174,39 +219,37 @@
 							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
 							"type": "string"
 						}
-
 					},
 					"possibleExceptions": {
-							"$id": "POSSIBLE_EXCEPTION",
-							"description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
-							"type": "array",
-							"items": {
-								"stepNumber": {
-									"description": "Refers to a step number in DETAILED_PROCESS_STEPS.",
-									"type": "integer"
-								},
-								"exceptionType": {
-									"description": "The type of error or exception",
-									"oneOf": [ "buisness", "application", "other" ]
-								},
-								"reaction": {
-									"description": "Steps taken in addition to any INDICATOR_RECOVERY_ACTION",
-									"type": "string"
-								},
-								"indicators": {
-									"description": "A list of ways the exception can be discovered",
-									"type": "array",
-									"items": {
-										"indicator": {
+						"$id": "POSSIBLE_EXCEPTION",
+						"description": "A list of all known possible errors, exceptions, or other problems that can happen at this step",
+						"type": "array",
+						"items": {
+							"stepNumber": {
+								"description": "Refers to a step number in DETAILED_PROCESS_STEPS.",
+								"type": "integer"
+							},
+							"exceptionType": {
+								"description": "The type of error or exception",
+								"oneOf": [ "buisness", "application", "other" ]
+							},
+							"reaction": {
+								"description": "Steps taken in addition to any INDICATOR_RECOVERY_ACTION",
+								"type": "string"
+							},
+							"indicators": {
+								"description": "A list of ways the exception can be discovered",
+								"type": "array",
+								"items": {
+									"indicator": {
 										"$id": "PROBLEM_INDICATOR",
 										"description": "How the exception or error is presented to the the user or how to discover the problem",
 										"type": "string"
-										},
-										"recovery": {
-											"$id": "INDICATOR_RECOVERY_ACTION",
-											"description": "How to recover from the exception when this indicator is detected",
-											"type": "string"
-										}	
+									},
+									"recovery": {
+										"$id": "INDICATOR_RECOVERY_ACTION",
+										"description": "How to recover from the exception when this indicator is detected",
+										"type": "string"
 									}
 								}
 							}
@@ -292,16 +335,26 @@
 			"$id": "TO_BE_PROCESS",
 			"description": "Describes the to-be process flow",
 			"type": "object",
-			"$comment": "The AS-IS Process section of a Process Definition Document (PDD) describes the current state of the process before automation or improvement. It outlines: Steps currently performed, Roles involved, Systems used, Pain points, inefficiencies, and exceptions. How to Find It: Look for a section titled "AS-IS Process," "Current State," or "Existing Process". Often located early in the document, before TO-BE or future state descriptions. May include process maps, flowcharts, or step-by-step descriptions. This section serves as the baseline for identifying automation opportunities."
+			"$comment": "The AS-IS Process section of a Process Definition Document (PDD) describes the current state of the process before automation or improvement. It outlines: Steps currently performed, Roles involved, Systems used, Pain points, inefficiencies, and exceptions. How to Find It: Look for a section titled "AS-IS Process," "Current State," or "Existing Process". Often located early in the document, before TO-BE or future state descriptions. May include process maps, flowcharts, or step-by-step descriptions. This section serves as the baseline for identifying automation opportunities.",
 			"properties": {
 				"ToBeFlow": {
 					"$id": "TO_BE_PROCESS_FLOW",
 					"description": "Describes the to-be process as a flow chart",
 					"type": "array",
 					"items": {
-						"flowDescription": {
-							"$id": "FLOW_ID",
-							"description": "A short description of a step described as a flow chart process",
+						"flowchartId": {
+			  				"$id": "HIGH_LEVEL_TO_BE_FLOWCHART_ID",
+							"description": "The number that uniquely identifies an item in the flowchart.",
+							"type": "integer"
+						},
+						"flowchartText": {
+              				"$id": "HIGH_LEVEL_TO_BE_FLOWCHART_TEXT",
+							"description": "A detailed description of the step which can be used to execute the step even by someone who has never executed the process before.",
+							"type": "string"
+						},
+						"flowchartShapeDescription": {
+              				"$id": "HIGH_LEVEL_TO_BE_FLOWCHART",
+							"description": "The shape used in the flowchart to represent the step. Common shapes include: Oval (Start/End), Rectangle (Process Step), Diamond (Decision Point), Parallelogram (Input/Output), Arrow (Flow Direction), and others",
 							"type": "string"
 						},
 						"transitions": {
