@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/kristofer-hoch/schemas/blob/4c9dcd5773fc25c3d22fe94133f926bd2ea0cdff/json/process-design-schema.json",
+  "$id": "https://github.com/kristofer-hoch/schemas/blob/0357b3ed1e26c5f3fc0421c5e2c53fa018f127c7/json/process-design-schema.json",
   "title": "Process Design Document Schema",
   "description": "Process design document description",
   "type": "object",
